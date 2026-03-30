@@ -10,7 +10,7 @@ allowed-tools:
 author: Crystian
 license: MIT
 metadata:
-  version: 0.1.2
+  version: 0.1.3
   tags: statusline, status-bar, ui, productivity
   github: https://github.com/crystian/skills
   linkedin: https://www.linkedin.com/in/crystian
