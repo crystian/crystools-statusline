@@ -56,7 +56,7 @@ Wait for the user to confirm before proceeding. If the user declines, do nothing
 
 1. **Find the script path** — resolve the absolute path to `statusline-command.sh`:
    ```bash
-   find ~/.claude -name "statusline-command.sh" -path "*/scripts/*" 2>/dev/null | head -1
+   find ~/.claude -name "statusline-command.sh" -path "*/scripts/*" 2>/dev/null | sort -V | tail -1
    ```
    If not found, ask the user for the plugin location.
 
@@ -64,11 +64,11 @@ Wait for the user to confirm before proceeding. If the user declines, do nothing
 
 3. **Ask the user which icon mode they prefer** (if `CRYSTOOLS_SL_ICONS` is not already set):
 
-   | Value   | Description                          |
-   |---------|--------------------------------------|
-   | `nerd`  | Nerd Font icons (requires a [Nerd Font](https://www.nerdfonts.com/) terminal) |
-   | `emoji` | Unicode emoji fallback (default)     |
-   | `none`  | Plain text, no icons                 |
+   | #   | Value   | Description                          |
+   |-----|---------|--------------------------------------|
+   | 1   | `nerd`  | Nerd Font icons (requires a [Nerd Font](https://www.nerdfonts.com/) terminal) |
+   | 2   | `emoji` | Unicode emoji fallback (default)     |
+   | 3   | `none`  | Plain text, no icons                 |
 
 4. **Set the `statusLine` and `env` config** in `~/.claude/settings.json`, preserving all existing keys:
    ```json
