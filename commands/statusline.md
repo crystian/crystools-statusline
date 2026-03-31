@@ -5,7 +5,13 @@ allowed-tools: Read, Edit, Bash(grep:*), Bash(find:*)
 
 # Status Line Setup
 
-First, read `~/.claude/settings.json` and check if `statusLine` is already configured.
+First, read the plugin version from `.claude-plugin/plugin.json` (relative to this plugin's root) and display it subtly at the start:
+
+```
+crystools v{version} — status line setup
+```
+
+Then, read `~/.claude/settings.json` and check if `statusLine` is already configured.
 
 ## If already installed
 
