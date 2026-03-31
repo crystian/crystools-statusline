@@ -55,6 +55,31 @@ fi
 # Current time
 cur_time=$(date +%H:%M)
 
+# ─── Windows compatibility: auto-detect and fall back to 'none' icon mode ───
+#
+# On Windows, Claude Code runs inside Git Bash (MSYS2) or Cygwin. These
+# environments do not reliably render multi-byte Unicode characters such as
+# emojis (📁 🤖 🔄) or Nerd Font private-use glyphs (󰝰 󰘬 󱙺) — they appear
+# as coloured squares or empty boxes in the terminal instead.
+#
+# Detection strategy:
+#   $OSTYPE == "msys"   → Git Bash / MSYS2 (most common Windows setup)
+#   $OSTYPE == "cygwin" → Cygwin terminal
+#   $WINDIR  non-empty  → fallback: any Windows environment that sets this var
+#
+# We only apply the override when the user has NOT explicitly set
+# CRYSTOOLS_SL_ICONS themselves (checked with the ${var+x} idiom).
+# This way a Windows user who has a capable terminal (e.g. Windows Terminal
+# with a Nerd Font) can still opt in by exporting the variable in their
+# shell profile:
+#   export CRYSTOOLS_SL_ICONS=emoji   # or 'nerd'
+# ─────────────────────────────────────────────────────────────────────────────
+if [[ -z "${CRYSTOOLS_SL_ICONS+x}" ]]; then
+  if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || -n "$WINDIR" ]]; then
+    CRYSTOOLS_SL_ICONS="none"
+  fi
+fi
+
 # Icons: nerd | emoji | none (via CRYSTOOLS_SL_ICONS env var)
 case "${CRYSTOOLS_SL_ICONS:-emoji}" in
   nerd)
