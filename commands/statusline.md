@@ -72,7 +72,11 @@ Wait for the user to confirm before proceeding. If the user declines, do nothing
    ```bash
    find ~/.claude -name "plugin.json" -path "*crystools*/.claude-plugin/*" 2>/dev/null | sort -V | tail -1 | xargs -I{} dirname {} | xargs -I{} dirname {} | xargs -I{} echo {}/scripts/statusline-command.sh
    ```
-   Then **verify the file exists** with `test -f`. If it does not exist, show the resolved path and ask the user for help. **NEVER fabricate or guess a path** — only use the result of this command.
+   Then **replace `$HOME` with `~`** in the resolved path (e.g. `/home/user/.claude/...` → `~/.claude/...`):
+   ```bash
+   echo "$RESOLVED_PATH" | sed "s|$HOME|~|"
+   ```
+   Then **verify the file exists** with `test -f` (use the original absolute path for the test, not the `~` version). If it does not exist, show the resolved path and ask the user for help. **NEVER fabricate or guess a path** — only use the result of this command.
 
 2. **Read current settings** from `~/.claude/settings.json`.
 
@@ -89,7 +93,7 @@ Wait for the user to confirm before proceeding. If the user declines, do nothing
    {
      "statusLine": {
        "type": "command",
-       "command": "bash <ABSOLUTE_PATH>/statusline-command.sh"
+       "command": "bash ~/.claude/<RELATIVE_PATH>/statusline-command.sh"
      },
      "env": {
        "CRYSTOOLS_SL_ICONS": "<user_choice>"
