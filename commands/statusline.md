@@ -1,15 +1,23 @@
 ---
 description: Configure Claude Code status line with context, git, cost, rate limits, and cache info.
-allowed-tools: Read, Edit, Bash(grep:*), Bash(find:*)
+allowed-tools: Read, Edit, Bash(grep:*), Bash(find:*), Bash(cat:*)
 ---
 
 # Status Line Setup
 
-First, read the plugin version from `.claude-plugin/plugin.json` (relative to this plugin's root) and display it subtly at the start:
+**MANDATORY first step** — before doing ANYTHING else, resolve the plugin root and read the version:
+
+```bash
+find ~/.claude -name "plugin.json" -path "*crystools*/.claude-plugin/*" 2>/dev/null | sort -V | tail -1
+```
+
+Read that `plugin.json` file and extract the `version` field. Then your **very first output** to the user MUST be:
 
 ```
 crystools v{version} — status line setup
 ```
+
+Do NOT skip this. Do NOT proceed without showing the version. This is mandatory.
 
 Then, read `~/.claude/settings.json` and check if `statusLine` is already configured.
 
@@ -60,11 +68,11 @@ Wait for the user to confirm before proceeding. If the user declines, do nothing
 
 ## Setup procedure
 
-1. **Find the script path** — resolve the absolute path to `statusline-command.sh`:
+1. **Find the script path** — the script lives in `scripts/statusline-command.sh` relative to this plugin's root. Resolve the absolute path from `plugin.json`:
    ```bash
-   find ~/.claude -name "statusline-command.sh" -path "*/scripts/*" 2>/dev/null | sort -V | tail -1
+   find ~/.claude -name "plugin.json" -path "*crystools*/.claude-plugin/*" 2>/dev/null | sort -V | tail -1 | xargs -I{} dirname {} | xargs -I{} dirname {} | xargs -I{} echo {}/scripts/statusline-command.sh
    ```
-   If not found, ask the user for the plugin location.
+   Then **verify the file exists** with `test -f`. If it does not exist, show the resolved path and ask the user for help. **NEVER fabricate or guess a path** — only use the result of this command.
 
 2. **Read current settings** from `~/.claude/settings.json`.
 
