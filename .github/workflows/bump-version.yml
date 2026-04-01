@@ -38,6 +38,7 @@ jobs:
 
           NEW="${MAJOR}.${MINOR}.${PATCH}"
           jq --arg v "$NEW" '.version = $v' "$FILE" > tmp.json && mv tmp.json "$FILE"
+          echo "CURRENT=$CURRENT" >> "$GITHUB_ENV"
           echo "VERSION=$NEW" >> "$GITHUB_ENV"
           echo "Bumped $CURRENT -> $NEW"
 
