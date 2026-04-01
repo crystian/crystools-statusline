@@ -10,14 +10,12 @@ Claude Code plugin with productivity tools: status line, utilities, and workflow
 
 ## Install
 
-> **Note:** This plugin has been submitted to the official Claude Code marketplace. Until it's approved, install it manually:
-
 ```bash
-claude plugin marketplace add crystian/crystools
-claude plugin install crystools@crystian-marketplace
+claude plugin marketplace add crystian/mia-marketplace
+claude plugin install statusline@mia-marketplace
 ```
 
-Then inside Claude Code, run `/crystools:statusline` to set up the status line.
+Then inside Claude Code, run `/statusline` to set up the status line.
 
 ### Permissions
 
