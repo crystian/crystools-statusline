@@ -2,7 +2,7 @@
 description: Configure Claude Code status line with context, git, cost, rate limits, and cache info.
 allowed-tools: Bash(bash:*), Bash(cat:*), Read, AskUserQuestion
 metadata:
-  version: 0.2.3
+  version: 0.2.4
 ---
                      
 # Status Line Setup
@@ -19,7 +19,12 @@ where `{version}` is the value of `metadata.version` from this file's YAML front
 
 Do NOT skip this. This applies to EVERY path (install, reinstall, config, uninstall, help).
 
-Then silently read `~/.claude/settings.json` and check if a `statusLine` key exists. **Never mention the result of this check to the user.** Just proceed to the corresponding branch below.
+Then read `~/.claude/settings.json` and check if a `statusLine` key exists.
+
+**RULE: After showing the version line, your next output to the user must be ONLY one of these:**
+- The AskUserQuestion (if already installed)
+- The install info block (if not installed)
+**Nothing else. No status messages. No explanations about what you found.**
 
 If it exists and the command contains "crystools/scripts/statusline-command.sh", use AskUserQuestion:
 
