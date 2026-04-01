@@ -1,7 +1,7 @@
 {
-  "name": "crystools",
+  "name": "mia-statusline",
   "version": "0.2.8",
-  "description": "Crystian's toolbox — status line, utilities, and productivity skills for Claude Code.",
+  "description": "Status line with context window, git, cost, rate limits, and cache stats.",
   "author": {
     "name": "Crystian",
     "url": "https://www.linkedin.com/in/crystian"
