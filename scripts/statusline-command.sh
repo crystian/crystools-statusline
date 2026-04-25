@@ -28,6 +28,7 @@ output_style=$(echo "$input" | jq -r '.output_style.name // empty')
 vim_mode=$(echo "$input" | jq -r '.vim.mode // empty')
 agent_name=$(echo "$input" | jq -r '.agent.name // empty')
 exceeds_200k=$(echo "$input" | jq -r '.exceeds_200k_tokens // empty')
+effort=$(echo "$input" | jq -r '.effort.level // empty')
 
 # Placeholder: no activity yet
 if [ -z "$cur_in" ]; then
@@ -238,10 +239,12 @@ if [ -n "$model" ]; then
       ctx_label=" ${ctx_k}K"
     fi
   fi
+  effort_text=""
+  [ -n "$effort" ] && effort_text=" \033[38;2;200;150;220m${effort}"
   if [ -n "$ICO_MODEL" ]; then
-    seg "" "210;170;190" "${ICO_MODEL} ${short_model}${ctx_label}"
+    seg "" "210;170;190" "${ICO_MODEL} ${short_model}${ctx_label}${effort_text}"
   else
-    seg "" "210;170;190" "${short_model}${ctx_label}"
+    seg "" "210;170;190" "${short_model}${ctx_label}${effort_text}"
   fi
 fi
 
